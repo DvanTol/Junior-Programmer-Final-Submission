@@ -19,12 +19,11 @@ public class RotateBeam : MonoBehaviour
         
         if (!startPos)
         {
-            // Rotate our transform a step closer to the target's.
+            // Rotate the transform a step closer to the target's.
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetLeft.rotation, step);
             if(transform.rotation.eulerAngles.z > 17.9)
             {
                 startPos = true;
-                //Debug.Log("rotated to target position at start");
             }
         }
 
@@ -37,7 +36,6 @@ public class RotateBeam : MonoBehaviour
             {
                 click = false;
                 isleft = false;
-                //Debug.Log("rotated right after click");
             }
         }
 
@@ -46,7 +44,6 @@ public class RotateBeam : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetLeft.rotation, step);
             if (transform.rotation.eulerAngles.z > 17.9 && transform.rotation.eulerAngles.z < 18.1)
             {
-                //Debug.Log("rotated left after click");
                 click = false;
                 isleft = true;
             }
@@ -55,7 +52,6 @@ public class RotateBeam : MonoBehaviour
 
     void OnMouseDown()
     {
-        //Debug.Log("clicked");
         click = true;
     }
 }

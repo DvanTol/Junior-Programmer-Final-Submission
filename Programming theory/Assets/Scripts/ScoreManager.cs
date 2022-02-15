@@ -7,7 +7,7 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public Dictionary<string, int> scoreDict;
-    public int totalScore { get; private set; } //encapsulation. ADD so that it cannot be a negative value
+    public int totalScore { get; private set; } //encapsulation
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI blueText;
     public TextMeshProUGUI yellowText;
@@ -17,14 +17,11 @@ public class ScoreManager : MonoBehaviour
     // singleton:
     public static ScoreManager Instance { get; private set; }
  
-   
     private void Awake()
     {
         Instance = this;
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         scoreDict = new Dictionary<string, int>
@@ -37,14 +34,13 @@ public class ScoreManager : MonoBehaviour
 
     public void UpdatePoints(string color) 
     {
-        scoreDict[color]++; //script attached to each ballPrefab and add textmesh in there
+        scoreDict[color]++; 
     }
 
     public void CalculateTotalScore()
     {
         int total = scoreDict["blue"] + scoreDict["yellow"] + scoreDict["pink"] + scoreDict["orange"];
         totalScore = total;
-        Debug.Log("total score: " + total);
     }
 
     public void ResetScore()
@@ -54,6 +50,8 @@ public class ScoreManager : MonoBehaviour
         scoreDict["pink"] = 0;
         scoreDict["orange"] = 0;
         CalculateTotalScore();
+        UpdateScoreText();
+        UpdateBoxScores();
     }
 
     public void UpdateScoreText()

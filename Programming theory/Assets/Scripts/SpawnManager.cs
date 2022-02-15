@@ -5,25 +5,38 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject[] ballPrefabs;
-    private float startDelay = 1;
-    private float spawnInterval = 3f;
+    public int ballCount = 0;
+    private int maxBalls = 20;
 
-    // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnBalls", startDelay, spawnInterval); // TODO make the interval a Random range
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-      
+        Invoke("SpawnBalls", 1);
     }
 
     void SpawnBalls()
     {
-        int ballIndex = Random.Range(0, ballPrefabs.Length);
-        Instantiate(ballPrefabs[ballIndex], new Vector3(12, 31, 0), ballPrefabs[ballIndex].transform.rotation);
-       
+        if (ballCount < maxBalls)
+        {
+            float randomInterval = Random.Range(1.2f, 3f);
+            int ballIndex = Random.Range(0, ballPrefabs.Length);
+            Instantiate(ballPrefabs[ballIndex], new Vector3(12, 31, 0), ballPrefabs[ballIndex].transform.rotation);
+            ballCount++;
+            Invoke("SpawnBalls", randomInterval);
+        }
+        else
+        {
+           Invoke("SetGameInactive", 4.5f);
+        }
     }
+
+    public void Restart()
+    {
+        Invoke("SpawnBalls", 1);
+    }
+
+    private void SetGameInactive()
+    {
+        MainUIHandler.Instance.isGameActive = false;
+    }
+
 }

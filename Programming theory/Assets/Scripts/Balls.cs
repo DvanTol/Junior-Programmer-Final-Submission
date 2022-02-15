@@ -5,9 +5,21 @@ using TMPro;
 
 public class Balls : MonoBehaviour 
 {
-    public virtual void OnTriggerEnter(Collider other) // virtual to be able to override in BAD class
-    {   // only the 4 boxes have a collider set to trigger
-        // check if other is box in same color  
+    private Rigidbody rb;
+    private int speed = 50; // Abstraction
+
+    public void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    public void Update()
+    {
+        rb.AddForce(new Vector3(0, -speed, 0), ForceMode.Force);
+    }
+
+    public virtual void OnTriggerEnter(Collider other) // virtual to be able to override in BadBall class
+    {   
         if (gameObject.tag == other.tag) 
         {
             string color = other.tag;

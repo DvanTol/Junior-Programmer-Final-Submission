@@ -4,19 +4,32 @@ using UnityEngine;
 
 public class MainUIHandler : MonoBehaviour
 {
-    private bool isGameOver = false;
-  
-    // Update is called once per frame
-    void Update()
-    {
-        if (isGameOver == true)
-        {
-            // show gameover UI
-        }
+    public bool isGameActive = true;
+    public GameObject startUI;
+    public SpawnManager spawnManager;
 
-        // update score on screen
-        // totalScore var in Balls
+    // singleton:
+    public static MainUIHandler Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 
-   
+    void Update()
+    {
+        if (isGameActive == false)
+        {
+            startUI.SetActive(true);
+            isGameActive = true;
+        }
+    }
+
+    public void StartNew()
+    {
+        spawnManager.ballCount = 0;
+        ScoreManager.Instance.ResetScore();
+        spawnManager.Restart();
+        startUI.SetActive(false);
+    }
 }
