@@ -7,10 +7,12 @@ public class Balls : MonoBehaviour
 {
     private Rigidbody rb;
     private int speed = 50; // Abstraction
+    AudioSource pointScoredAudio;
 
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
+        pointScoredAudio = GetComponent<AudioSource>();
     }
 
     public void Update()
@@ -28,6 +30,8 @@ public class Balls : MonoBehaviour
             ScoreManager.Instance.CalculateTotalScore();
             ScoreManager.Instance.UpdateScoreText();
             ScoreManager.Instance.UpdateBoxScores();
+
+            pointScoredAudio.Play();
         }
     }
 }
